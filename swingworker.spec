@@ -2,7 +2,7 @@
 
 Name:		swingworker
 Version:	1.2.1
-Release:	%mkrel 1
+Release:	%mkrel 2
 Epoch:		0
 Summary:        Swing Worker API
 License:        LGPL
@@ -10,7 +10,7 @@ Url:            https://swingworker.dev.java.net/
 Group:		Development/Java
 #
 Source0:        https://swingworker.dev.java.net/files/documents/2810/51774/swing-worker-src-1.1.zip
-BuildRequires:	jpackage-utils >= 1.6
+BuildRequires:	java-rpmbuild >= 1.6
 BuildRequires:  ant
 BuildRequires:  ant-nodeps
 BuildRequires:  ant-junit
