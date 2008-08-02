@@ -2,7 +2,7 @@
 
 Name:		swingworker
 Version:	1.2.1
-Release:	%mkrel 4
+Release:	%mkrel 5
 Epoch:		0
 Summary:        Swing Worker API
 License:        LGPL
