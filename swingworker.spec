@@ -2,7 +2,7 @@
 
 Name:		swingworker
 Version:	1.2.1
-Release:	%mkrel 6
+Release:	7
 Epoch:		0
 Summary:        Swing Worker API
 License:        LGPL
@@ -14,8 +14,8 @@ BuildRequires:	java-rpmbuild >= 1.6
 BuildRequires:  ant
 BuildRequires:  ant-nodeps
 BuildRequires:  ant-junit
+BuildRequires:  locales-en
 BuildArch:      noarch
-BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root
 
 %description
 SwingWorker is designed for situations where you need to have a long running 
@@ -33,14 +33,14 @@ Requires(postun): /bin/rm
 Javadoc for %{name}.
 
 %prep
-%{__rm} -fr %{buildroot}
 %setup -q -c -n %{name}-%{version}
 # remove all binary libs
 find . -name "*.jar" -exec %{__rm} -f {} \;
 
 %build
+export LC_ALL=ISO-8859-1
 [ -z "$JAVA_HOME" ] && export JAVA_HOME=%{_jvmdir}/java 
-ant bundles
+ant bundles javadoc
 
 %install
 # jar
@@ -49,11 +49,8 @@ ant bundles
 %{__ln_s} %{name}-%{version}.jar %{buildroot}%{_javadir}/%{name}.jar
 # javadoc
 %{__install} -d -m 755 %{buildroot}%{_javadocdir}/%{name}-%{version}
-%{__cp} -pr dist/javadoc/* %{buildroot}%{_javadocdir}/%{name}-%{version}
+cp -pr dist/javadoc/* %{buildroot}%{_javadocdir}/%{name}-%{version}
 (cd %{buildroot}%{_javadocdir} && ln -sf %{name}-%{version} %{name})
-
-%clean
-%{__rm} -rf %{buildroot}
 
 %post javadoc
 %{__rm} -f %{_javadocdir}/%{name}
@@ -74,3 +71,27 @@ fi
 %dir %{_javadocdir}/%{name}-%{version}
 %{_javadocdir}/%{name}-%{version}/*
 %ghost %{_javadocdir}/%{name}
+
+
+%changelog
+* Tue Sep 08 2009 Thierry Vignaud <tvignaud@mandriva.com> 0:1.2.1-6mdv2010.0
++ Revision: 434237
+- rebuild
+
+* Sat Aug 02 2008 Thierry Vignaud <tvignaud@mandriva.com> 0:1.2.1-5mdv2009.0
++ Revision: 261305
+- rebuild
+
+* Tue Jul 29 2008 Thierry Vignaud <tvignaud@mandriva.com> 0:1.2.1-4mdv2009.0
++ Revision: 253860
+- rebuild
+
+* Sun Dec 16 2007 Anssi Hannula <anssi@mandriva.org> 0:1.2.1-2mdv2008.1
++ Revision: 121029
+- buildrequire java-rpmbuild, i.e. build with icedtea on x86(_64)
+
+* Thu Dec 13 2007 Jaroslav Tulach <jtulach@mandriva.org> 0:1.2.1-1mdv2008.1
++ Revision: 119142
+- Initial package for backport of Java6's swingworker
+- create swingworker
+
